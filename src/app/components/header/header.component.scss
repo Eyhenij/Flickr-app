@@ -1,0 +1,15 @@
+.header__container {
+    position: relative;
+    background-color: #bbbbbb;
+    color: white;
+    font-size: 24px;
+
+    .header__title {
+        margin-left: 50px;
+    }
+
+    .profile__icon {
+        position: absolute;
+        right: 50px;
+    }
+}

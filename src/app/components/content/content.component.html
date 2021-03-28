@@ -1,0 +1,25 @@
+<div class="input__container">
+    <mat-form-field appearance="outline" class="input__field">
+        <input
+            matInput
+            type="search"
+            aria-label="Search Field"
+            placeholder="Find images"
+            [formControl]="searchControl"
+            (input)="onSearch()"
+        >
+        <button
+            *ngIf="searchControl.value"
+            matSuffix
+            mat-button
+            mat-icon-button
+            aria-label="Clear"
+            (click)="searchControl.setValue('')">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+
+    <div *ngIf="isEmptySearch">
+        No images here. Would you try to search for anything else?
+    </div>
+</div>

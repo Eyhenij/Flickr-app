@@ -1,0 +1,48 @@
+$pageWidth: 1200px;
+$pageHeight: 99vh;
+
+.page {
+    position: relative;
+    width: $pageWidth;
+    height: $pageHeight;
+    margin: 0 auto;
+    display: grid;
+    grid-template-areas:
+        "h h"
+        "s c"
+        "f f";
+    grid-template-rows: 7fr 85fr 7fr;
+    grid-template-columns: 7fr 100fr;
+    border: 2px solid black;
+
+    .onLoading {
+        position: absolute;
+        width: $pageWidth;
+        height: $pageHeight;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .page__header {
+        grid-area: h;
+    }
+
+    .page__sidebar {
+        grid-area: s;
+    }
+
+    .page__content {
+        grid-area: c;
+    }
+
+    .page__footer {
+        grid-area: f;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+}
+
+
