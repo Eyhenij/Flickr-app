@@ -22,4 +22,15 @@
     <div *ngIf="isEmptySearch">
         No images here. Would you try to search for anything else?
     </div>
+
+    <div *ngIf="!isEmptySearch" class="paginator__container">
+        <mat-paginator
+            class="paginator"
+            showFirstLastButtons="true"
+            [length]="totalImagesCount$ | async"
+            [pageSizeOptions]="[10, 15, 20]"
+            [pageSize]="pageSize"
+            (page)="onPageChange($event)"
+        ></mat-paginator>
+    </div>
 </div>

@@ -17,6 +17,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { LoadingPageComponent } from './components/loading-page/loading-page.component';
+import { imagesReducer } from './store/images/images.reducer';
+import { ImagesEffects } from './store/images/images.effects';
 
 @NgModule({
     declarations: [
@@ -36,9 +38,9 @@ import { LoadingPageComponent } from './components/loading-page/loading-page.com
         HttpClientModule,
         ReactiveFormsModule,
         FormsModule,
-        StoreModule.forRoot({}, {}),
-        StoreDevtoolsModule.instrument({maxAge: 25, logOnly: environment.production}),
-        EffectsModule.forRoot(),
+        StoreModule.forRoot({ images: imagesReducer }, {}),
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+        EffectsModule.forRoot([ImagesEffects]),
     ],
     bootstrap: [AppComponent]
 })

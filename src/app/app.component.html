@@ -1,5 +1,5 @@
 <div class="page">
-    <div *ngIf="onLoading" class="onLoading">
+    <div *ngIf="onLoading$ | async" class="onLoading">
         <app-loading-page></app-loading-page>
     </div>
 
