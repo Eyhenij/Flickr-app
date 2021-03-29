@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { getOnLoadingSelector } from './store/images/images.selectors';
-import { IImagesState } from './store/images/app.store';
+import { getOnLoadingValueSelector } from './store/app.selectors';
 
 @Component({
     selector: 'app-root',
@@ -11,6 +10,6 @@ import { IImagesState } from './store/images/app.store';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
-    public onLoading$: Observable<boolean> = this._store.select(getOnLoadingSelector);
-    constructor(private readonly _store: Store<IImagesState>) {}
+    public onLoading$: Observable<boolean> = this._store$.select(getOnLoadingValueSelector);
+    constructor(private readonly _store$: Store) {}
 }

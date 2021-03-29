@@ -12,14 +12,9 @@ export class FlickrService {
 
     constructor(private readonly _http: HttpClient) {}
 
-    public findAll(name: string, pageSize: number, currentPage: number): Observable<IFlickrResponse> {
+    public find(name: string, pageSize: number, currentPage: number): Observable<IFlickrResponse> {
         return this._http.get<IFlickrResponse>(
             `${this._flickrUrl}&${this._apiKey}&text=${name}&format=json&nojsoncallback=1&per_page=${pageSize}&page=${currentPage}`
         );
-    }
-
-    public setResponseData(res: IFlickrResponse): void {
-        localStorage.setItem('totalImagesCount', res.photos.total);
-        localStorage.setItem('images', JSON.stringify(res.photos.photo));
     }
 }

@@ -28,9 +28,18 @@
             class="paginator"
             showFirstLastButtons="true"
             [length]="totalImagesCount$ | async"
-            [pageSizeOptions]="[10, 15, 20]"
+            [pageSizeOptions]="[12, 24, 36]"
             [pageSize]="pageSize"
             (page)="onPageChange($event)"
         ></mat-paginator>
+    </div>
+
+    <div class="image__container">
+        <app-image-card
+            *ngFor="let image of (images$ | async)"
+            [image]="image"
+            [isSearchPage]="true"
+            class="image__card"
+        ></app-image-card>
     </div>
 </div>

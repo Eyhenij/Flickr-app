@@ -1,0 +1,48 @@
+<mat-card class="image__container">
+    <mat-card-content class="image">
+        <img
+            mat-card-image
+            src="{{image.photoUrl}}"
+            alt="photo">
+    </mat-card-content>
+
+    <mat-card-actions>
+        <button
+            *ngIf="isSearchPage"
+            mat-button
+            class="btn"
+            (click)="makeBookmark()"
+        >Bookmark it!</button>
+
+        <button
+            *ngIf="!isSearchPage"
+            mat-button
+            class="btn"
+            (click)="removeBookmark()"
+        >Remove it!</button>
+
+        <mat-form-field
+            *ngIf="isSearchPage"
+            appearance="outline"
+            class="input__field"
+        >
+            <input
+                matInput
+                type="text"
+                aria-label="Tags Field"
+                placeholder="some tags?"
+                [formControl]="tagsControl"
+                (input)="onTagsInput()"
+            >
+            <button
+                *ngIf="tagsControl.value"
+                matSuffix
+                mat-button
+                mat-icon-button
+                aria-label="Clear"
+                (click)="tagsControl.setValue('')">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </mat-card-actions>
+</mat-card>

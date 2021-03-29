@@ -1,0 +1,19 @@
+.bookmarks__page {
+    width: 96%;
+    margin: 0 auto;
+
+    .bookmark__container {
+        width: 100%;
+        max-height: 50rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, 30% 30% 30%);
+        justify-content: space-between;
+        overflow: auto;
+        overflow-y: scroll;
+
+        .image__card {
+            width: 85%;
+            margin-bottom: 20px;
+        }
+    }
+}

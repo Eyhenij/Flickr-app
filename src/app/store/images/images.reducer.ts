@@ -1,16 +1,16 @@
-import { createReducer, on } from '@ngrx/store';
-import { IImagesState } from './app.store';
+import { Action, createReducer, on } from '@ngrx/store';
+import { IImagesState } from '../app.store';
 import * as imagesActions from './images.actions';
+import { IFlickrPhoto, IPhotoObject } from '../../interfaces/flickr.interface';
 
 const initialState: IImagesState = {
     onLoading: false,
     images: [],
     totalImagesCount: 0,
-    selectedImage: null,
     error: null
 };
 
-export const imagesReducer = createReducer(
+const _imagesReducer = createReducer(
     initialState,
     on(imagesActions.getImagesAction,
         (state: IImagesState) => ({
@@ -22,7 +22,13 @@ export const imagesReducer = createReducer(
         (state: IImagesState, { res }) => {
             return {
                 ...state,
-                images: [...res.photos.photo],
+                images: [...res.photos.photo.map((photo: IFlickrPhoto): IPhotoObject => {
+                    return {
+                        photoUrl: `https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg`,
+                        id: photo.id,
+                        title: photo.title
+                    };
+                })],
                 totalImagesCount: Number(res.photos.total),
                 onLoading: false
             };
@@ -36,3 +42,7 @@ export const imagesReducer = createReducer(
         })
     )
 );
+
+export const imagesReducer = (state: IImagesState, action: Action) => {
+    return _imagesReducer(state, action);
+};

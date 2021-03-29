@@ -17,6 +17,7 @@ $pageHeight: 99vh;
 
     .onLoading {
         position: absolute;
+        z-index: 2;
         width: $pageWidth;
         height: $pageHeight;
         display: flex;

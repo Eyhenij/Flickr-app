@@ -1,3 +1,14 @@
+export interface IFlickrResponse {
+    photos: {
+        page: number;
+        pages: number;
+        perpage: number;
+        photo: IFlickrPhoto[];
+        total: string;
+    };
+    stat: string;
+}
+
 export interface IFlickrPhoto {
     farm: string;
     id: string;
@@ -10,13 +21,9 @@ export interface IFlickrPhoto {
     title: string;
 }
 
-export interface IFlickrResponse {
-    photos: {
-        page: number;
-        pages: number;
-        perpage: number;
-        photo: IFlickrPhoto[];
-        total: string;
-    };
-    stat: string;
+export interface IPhotoObject {
+    photoUrl: string;
+    title: string;
+    id: string;
+    tags?: string[];
 }

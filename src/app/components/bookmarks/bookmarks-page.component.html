@@ -1,0 +1,11 @@
+<div class="bookmarks__page">
+    <div class="bookmark__container">
+        <app-image-card
+            *ngFor="let bookmark of (bookmarks$ | async)"
+            [image]="bookmark"
+            [isSearchPage]="false"
+            class="image__card"
+        ></app-image-card>
+    </div>
+</div>
+
