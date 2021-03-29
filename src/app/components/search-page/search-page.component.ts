@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { IPhotoObject } from '../../interfaces/flickr.interface';
 import { Store } from '@ngrx/store';
 import { getImagesAction } from '../../store/images/images.actions';
-import { fromEvent, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { getImagesSelector, getTotalImagesCountSelector } from '../../store/images/images.selectors';
-import { map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
 @Component({
     selector: 'app-content',
@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
     styleUrls: ['./search-page.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchPageComponent implements OnInit {
+export class SearchPageComponent implements OnInit, OnDestroy {
     @ViewChild(MatPaginator)
     private readonly _paginator: MatPaginator;
 
@@ -35,15 +35,21 @@ export class SearchPageComponent implements OnInit {
     ngOnInit(): void {
         this._dataSource.paginator = this._paginator;
         this.searchControl = new FormControl(this._searchString);
-        // this._subscription = fromEvent(this.searchControl, 'input')
-        //     .pipe(
-        //         map((event: Event) => event.target.value)
-        //     );
+        this._subscription = this.searchControl.valueChanges
+            .pipe(
+                filter((str: string): boolean => str.length > 2),
+                debounceTime(500),
+                distinctUntilChanged()
+            ).subscribe((str: string): void => this._getImages(str));
     }
 
-    private _getImages(): void {
+    ngOnDestroy(): void {
+        this._subscription.unsubscribe();
+    }
+
+    private _getImages(str?: string): void {
         this._store$.dispatch(getImagesAction({
-            name: this._searchString,
+            name: str ? str : this._searchString,
             pageSize: this.pageSize,
             currentPage: this._currentPage
         }));
@@ -52,7 +58,6 @@ export class SearchPageComponent implements OnInit {
     public onSearch(): void {
         this.isEmptySearch = false;
         this._searchString = this.searchControl.value.toLowerCase();
-        this._getImages();
     }
 
     public onPageChange(event: PageEvent): void {
